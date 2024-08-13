@@ -12,6 +12,20 @@ BOT_NAME = "imdb_scrape"
 SPIDER_MODULES = ["imdb_scrape.spiders"]
 NEWSPIDER_MODULE = "imdb_scrape.spiders"
 
+FEEDS = {
+    'moviedata.json': {
+        'format': 'json',
+        'overwrite': True,
+    },
+}
+
+# USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36"
+
+SCRAPEOPS_API_KEY = "a6a42ed9-0807-4fb9-aec1-8776827598ed"
+SCRAPEOPS_FAKE_USER_AGENT_ENDPOINT = "http://headers.scrapeops.io/v1/user-agents"
+SCRAPEOPS_FAKE_USER_AGENT_ENABLED = True
+SCRAPEOPS_NUM_RESULTS = 1000
+
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = "imdb_scrape (+http://www.yourdomain.com)"
@@ -50,9 +64,10 @@ ROBOTSTXT_OBEY = True
 
 # Enable or disable downloader middlewares
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
-#DOWNLOADER_MIDDLEWARES = {
-#    "imdb_scrape.middlewares.ImdbScrapeDownloaderMiddleware": 543,
-#}
+DOWNLOADER_MIDDLEWARES = {
+   "imdb_scrape.middlewares.ImdbScrapeDownloaderMiddleware": 543,
+   'imdb_scrape.middlewares.ScrapeOpsFakeBrowserHeaderAgentMiddleware': 400,
+}
 
 # Enable or disable extensions
 # See https://docs.scrapy.org/en/latest/topics/extensions.html
@@ -62,9 +77,9 @@ ROBOTSTXT_OBEY = True
 
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
-#ITEM_PIPELINES = {
-#    "imdb_scrape.pipelines.ImdbScrapePipeline": 300,
-#}
+ITEM_PIPELINES = {
+   "imdb_scrape.pipelines.ImdbScrapePipeline": 300,
+}
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html
